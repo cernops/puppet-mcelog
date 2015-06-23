@@ -9,6 +9,11 @@ class mcelog::params {
     fail("Module ${module_name} is not supported on architecture: ${::architecture}")
   }
 
+  # MCE is only supported on physical hardware
+  if $::is_virtual == true or $::is_virtual == 'true' {
+    fail("Module ${module_name} is not supported on virtual servers")
+  }
+
   case $::osfamily {
     'RedHat': {
       case $::operatingsystemmajrelease {
